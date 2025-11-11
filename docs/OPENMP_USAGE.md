@@ -2,6 +2,8 @@
 
 This example demonstrates how to use the IRBEM library in a thread-safe manner with OpenMP.
 
+**Related Issue**: See [PRBEM/IRBEM#65](https://github.com/PRBEM/IRBEM/issues/65) for background on parallelization requirements.
+
 ## Overview
 
 The IRBEM library has been partially updated to support OpenMP thread-level parallelism by adding `THREADPRIVATE` directives to COMMON blocks. This allows multiple threads to safely execute library functions in parallel.

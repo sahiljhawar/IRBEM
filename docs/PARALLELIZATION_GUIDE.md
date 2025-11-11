@@ -4,6 +4,8 @@
 
 This document describes the parallelization capabilities and limitations of the IRBEM library, along with practical solutions for achieving parallel execution.
 
+**Related Issue**: See [PRBEM/IRBEM#65](https://github.com/PRBEM/IRBEM/issues/65) for the original discussion on parallelization requirements.
+
 ## Problem Description
 
 The IRBEM library is written in Fortran 77 and makes extensive use of COMMON blocks for sharing data between subroutines. COMMON blocks are essentially global variables, which creates **race conditions** when multiple threads try to execute library functions simultaneously.

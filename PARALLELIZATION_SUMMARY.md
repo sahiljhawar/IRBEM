@@ -4,6 +4,8 @@
 
 This PR addresses the parallelization requirements for the IRBEM library by providing comprehensive analysis, documentation, and practical solutions for achieving parallel execution while maintaining minimal code changes.
 
+**Related Issue**: See [PRBEM/IRBEM#65](https://github.com/PRBEM/IRBEM/issues/65)
+
 ## Problem Statement
 
 The original request was to convert `source/onera_desp_lib.f` to C/C++ to enable OpenMP/MPI parallelism. The root issue is that Fortran COMMON blocks (global shared state) prevent thread-safe parallel execution.

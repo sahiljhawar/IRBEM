@@ -508,7 +508,7 @@ C
 C***********************************************************************
 C* RUNGE-KUTTA d'ordre 4
 C***********************************************************************
-        SUBROUTINE sksyst(h,xx,x2,Bl,Ifail)
+        SUBROUTINE sksyst_rk4(h,xx,x2,Bl,Ifail)
 C
         IMPLICIT NONE
 C
@@ -517,6 +517,7 @@ C
         REAL*8 B(3),Bl
         REAL*8 h
         REAL*8 xwrk(4,3)
+        INCLUDE 'integ_stats.cmn'
 C
 C FSAL cache (el_paso patch).  RK4 uses four stage evaluations, none of
 C them at the step endpoint, so the trailing CHAMP(x2,...) below is a
@@ -542,6 +543,7 @@ C
           Ifail = 0
         ELSE
           CALL CHAMP(xx,B,Bl,Ifail)
+          INTEG_NCHAMP = INTEG_NCHAMP + 1
           IF (Ifail.LT.0) RETURN
         ENDIF
 c        write(6,*)'b',B(1),B(2),B(3),Bl
@@ -554,6 +556,7 @@ c        write(6,*)'b',B(1),B(2),B(3),Bl
 c        write(6,*)x2(1),x2(2),x2(3),Bl
 C
         CALL CHAMP(x2,B,Bl,Ifail)
+        INTEG_NCHAMP = INTEG_NCHAMP + 1
 	IF (Ifail.LT.0) RETURN
         xwrk(2,1) = h*B(1)/Bl
         xwrk(2,2) = h*B(2)/Bl
@@ -564,6 +567,7 @@ C
 c        write(6,*)x2(1),x2(2),x2(3),Bl
 C
         CALL CHAMP(x2,B,Bl,Ifail)
+        INTEG_NCHAMP = INTEG_NCHAMP + 1
 	IF (Ifail.LT.0) RETURN
         xwrk(3,1) = h*B(1)/Bl
         xwrk(3,2) = h*B(2)/Bl
@@ -574,6 +578,7 @@ C
 c        write(6,*)x2(1),x2(2),x2(3),Bl
 C
         CALL CHAMP(x2,B,Bl,Ifail)
+        INTEG_NCHAMP = INTEG_NCHAMP + 1
 	IF (Ifail.LT.0) RETURN
         xwrk(4,1) = h*B(1)/Bl
         xwrk(4,2) = h*B(2)/Bl
@@ -588,6 +593,8 @@ C
         x2(3) = xx(3)+(   xwrk(1,3)+2.D0*xwrk(2,3)
      &               + 2.D0*xwrk(3,3)+   xwrk(4,3))/6.D0
         CALL CHAMP(x2,B,Bl,Ifail)
+        INTEG_NCHAMP = INTEG_NCHAMP + 1
+        INTEG_NSTEPS = INTEG_NSTEPS + 1
         IF (Ifail.LT.0) THEN
           ckvalid = 0
           RETURN

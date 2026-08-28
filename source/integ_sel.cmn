@@ -1,0 +1,6 @@
+C integ_sel.cmn
+C Selects which field-line stepper sksyst() dispatches to.
+C   0 = legacy fixed-step RK4 (bit-identical to the original sksyst)
+C   1 = fixed-step classical RK3 (3 CHAMP evals/step, FSAL-cached)
+       INTEGER*4 INTEG_METHOD
+       COMMON /INTEG_SEL/ INTEG_METHOD

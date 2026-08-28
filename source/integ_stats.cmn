@@ -1,0 +1,4 @@
+C integ_stats.cmn
+C Instrumentation counters for comparing field-line steppers.
+       INTEGER*8 INTEG_NCHAMP, INTEG_NSTEPS
+       COMMON /INTEG_STATS/ INTEG_NCHAMP, INTEG_NSTEPS
